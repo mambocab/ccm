@@ -135,9 +135,9 @@ def clone_development(git_repo, version, verbose=False):
             try:
                 rmdirs(target_dir)
                 print_("Deleted %s due to error" % target_dir)
-            except:
-                raise CCMError("Building C* version %s failed. Attempted to delete %s but failed. This will need to be manually deleted" % (version, target_dir))
-            raise
+            except Exception as e:
+                raise e
+                # raise CCMError("Building C* version %s failed. Attempted to delete %s but failed. This will need to be manually deleted" % (version, target_dir))
 
 def download_dse_version(version, username, password, verbose=False):
     url = DSE_ARCHIVE % version
