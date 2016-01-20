@@ -526,8 +526,8 @@ class ClusterStartCmd(Cmd):
         parser.add_option('--no-wait', action="store_true", dest="no_wait",
                           help="Do not wait for cassandra node to be ready. Overrides all other wait options.", default=False)
         # This option (wait-other-notice) is now deprecated, as it was never respected
-        parser.add_option('--wait-other-notice', action="store_true", dest="deprecate",
-                          help="DEPRECATED/IGNORED: Use '--skip-wait-other-notice' instead. This is now on by default.", default=True)
+        parser.add_option('--wait-other-notice', action="store_false", dest="deprecate",
+                          help="DEPRECATED/IGNORED: Use '--skip-wait-other-notice' instead. This is now on by default.", default=False)
         parser.add_option('--skip-wait-other-notice', action="store_false", dest="wait_other_notice",
                           help="Skip waiting until all live nodes of the cluster have marked the other nodes UP", default=True)
         parser.add_option('--wait-for-binary-proto', action="store_true", dest="wait_for_binary_proto",
@@ -546,6 +546,8 @@ class ClusterStartCmd(Cmd):
         Cmd.validate(self, parser, options, args, load_cluster=True)
         if self.options.no_wait and self.wait_for_binary_proto:
             print_("WARN: Both --wait-for-binary-proto and --no-wait were specified. --no-wait will be preferred.")
+        if self.options.deprecate:
+            print_("WARN: --wait-other-notice's behavior is on by default and the option is deprecated.")
 
     def run(self):
         try:
