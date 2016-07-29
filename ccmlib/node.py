@@ -1946,6 +1946,7 @@ def _grep_log_for_errors(log):
 
     return matches
 
+SubprocessReturn = namedtuple('SubprocessReturn', 'stdout stderr returncode')
 
 def handle_external_tool_process(process, cmd_args):
     out, err = process.communicate()
@@ -1954,5 +1955,4 @@ def handle_external_tool_process(process, cmd_args):
     if rc != 0:
         raise ToolError(cmd_args, rc, out, err)
 
-    ret = namedtuple('Subprocess_Return', 'stdout stderr rc')
-    return ret(stdout=out, stderr=err, rc=rc)
+    return SubprocessReturn(stdout=out, stderr=err, returncode=rc)
