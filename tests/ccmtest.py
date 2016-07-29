@@ -4,12 +4,6 @@ from unittest import TestCase
 
 class Tester(TestCase):
 
-    def __init__(self, *argv, **kwargs):
-        super(Tester, self).__init__(*argv, **kwargs)
-
-    def setUp(self):
-        pass
-
     def tearDown(self):
         if hasattr(self, 'cluster'):
             try:
